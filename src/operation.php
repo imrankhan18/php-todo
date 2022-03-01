@@ -3,13 +3,22 @@ session_start();
 $action = $_POST['btn'];
 switch ($action) {
     case 'Add':
-        if (gettype($_SESSION['list']) == 'array') {
+        if($_POST['todo']==''){
+            return header('Location:/index.php');
+            
+        }
+         if (gettype($_SESSION['list']) == 'array') {
             array_push($_SESSION['list'], $_POST['todo']);
         } else {
             $_SESSION['list'] = array($_POST['todo']);
         }
         break;
- 
+    case 'Update':
+        array_splice($_SESSION['list'], $_GET['id'], 1, $_POST['todo']);
+        break;
+    case 'update':
+        array_splice($_SESSION['todo'], $_GET['id'], 1, $_POST['todo']);
+    
 }
 header('Location:/index.php');
 $op = $_GET['op'];
@@ -29,6 +38,7 @@ switch ($op) {
     case 'deld':
         array_splice($_SESSION['todo'], $_GET['id'], 1);
         break;
+
+
 }
 header('Location:/index.php');
-?>
